@@ -1,24 +1,39 @@
-def read(arg1)
-  arg1
-end
+class REPL
+  attr_accessor :history
 
-def evaluate(arg1)
-  arg1
-end
+  def initialize
+    @history = []
+    run
+  end
 
-def print(arg1)
-  arg1
-end
+  private
 
-def rep(input)
-  puts ">> " + print(evaluate(read(input)))
-end
+  def read(arg1)
+    arg1
+  end
 
-while true
-  $stdout.print "jack_ruby_lisp >> "
-  if input = $stdin.gets
-    rep(input)
-  else
-    break
+  def evaluate(arg1)
+    arg1
+  end
+
+  def print(arg1)
+    arg1
+  end
+
+  def run
+    while true
+      $stdout.print "jack_ruby_lisp >> "
+
+      if input = $stdin.gets
+        history << input
+        puts ">> " + print(evaluate(read(input)))
+      else
+        puts nil
+        puts "Your history this session was:\n#{ history.join }"
+        break
+      end
+    end
   end
 end
+
+REPL.new
